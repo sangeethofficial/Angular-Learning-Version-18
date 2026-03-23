@@ -1,7 +1,48 @@
 <div class="container mt-5">
-  <h1 class="text-primary">Bootstrap Working 🚀</h1>
-  <button class="btn btn-warning">Click Me</button>
+  <h1 class="text-primary">Event Binding & PropertyBinding </h1>
+  <div class="text-success mb-2"> user with Id {{userId}} is {{userStatus}} function method {{getUserStatus()}} </div>
+  <!-- Event Binding -->
+   <div> {{userCreatedStatus}} </div>
+  <button class="btn btn-warning" [disabled]="!allowNewUser" (click)="submitUser()">Click Me</button>
+<!-- This is also and event binding with $event  -->
+  <div class="my-2">
+  <label  class="my-2"for="">User Name</label>
+    <input type="text" class="form-control" (input)="onUpdateUser($event)">
+    <div class="my-3">
+      {{userName}}
+    </div>
+  </div>
+ 
+
+
+ <!-- Property Binding -->
+<div>{{allowNewUser}} </div>
+<div [innerText]="allowNewUser"></div>
+<hr>
 </div>
 
+<!-- Two Way Binding ng model -->
+ <div class="container">
+<h2 class="text-primary">This is Two way Binding [(ngModel)]=''</h2>
+<h3 class="text-danger"> We need to import form Module in the app.module.ts</h3>
+ <div class="my-2">
+  <label  class="my-2"for="">User Name</label>
+  <input type="text" class="form-control" [(ngModel)]="userName" >
+    <div class="my-3">
+      {{userName}}
+    </div>
+  </div>
+  </div>
 
-<hr>
+
+  <div class="container">
+    <h2 class="text-primary">This is ngIf(structural directive ) </h2>
+
+  <button class="btn btn-warning" [disabled]="!allowNewUser" (click)="submitUser()">Click Me</button>
+<div class="" *ngIf="isUserCreated"> user is created and the user name is {{userName}}</div>
+  </div>
+  
+
+
+
+
