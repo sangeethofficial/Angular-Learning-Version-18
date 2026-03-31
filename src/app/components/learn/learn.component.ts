@@ -14,6 +14,7 @@ export class LearnComponent implements OnInit{
   userCreatedStatus='no user is created';
   userName = 'sangeeth';
   isUserCreated = false;
+  users=['sangeeth', 'stark']
 
   constructor(){
     setTimeout(()=>{ 
@@ -28,6 +29,7 @@ export class LearnComponent implements OnInit{
   }
   submitUser(){
     this.isUserCreated = true;
+    this.users.push(this.userName)
     this.userCreatedStatus = 'user is created ';
   }
   onUpdateUser(event:Event){

@@ -1,0 +1,160 @@
+<!-- roadmap.component.html -->
+<div class="roadmap-container">
+
+  <!-- ─── HEADER ─── -->
+  <header class="rmap-header">
+    <span class="badge">// Complete Learning Path</span>
+    <h1 class="rmap-title">Angular <span class="accent">Mastery</span> Roadmap</h1>
+    <p class="rmap-subtitle">Intermediate → Expert — All Topics, Zero Gaps</p>
+  </header>
+
+  <!-- ─── STATS ─── -->
+  <div class="stats-bar">
+    <div class="stat">
+      <div class="stat-num">8</div>
+      <div class="stat-label">Phases</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">{{ totalTopics() }}</div>
+      <div class="stat-label">Topics</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">{{ doneCount() }}</div>
+      <div class="stat-label">Completed</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">v17+</div>
+      <div class="stat-label">Angular Ver</div>
+    </div>
+  </div>
+
+  <!-- ─── OVERALL PROGRESS ─── -->
+  <div class="overall-progress">
+    <span class="progress-label">OVERALL PROGRESS</span>
+    <div class="progress-track">
+      <div class="progress-fill" [style.width.%]="progressPct()"></div>
+    </div>
+    <span class="progress-pct">{{ progressPct() }}%</span>
+  </div>
+
+  <!-- ─── PHASE TABS ─── -->
+  <div class="phase-tabs">
+    @for (phase of phases; track phase.id; let pi = $index) {
+      <button
+        class="phase-tab"
+        [class.active]="activePhaseIndex() === pi"
+        [class.done]="isPhaseDone(pi)"
+        (click)="goPhase(pi)">
+        {{ (pi + 1).toString().padStart(2, '0') }} {{ phase.title }}
+      </button>
+    }
+  </div>
+
+  <!-- ─── ACTIVE PHASE ─── -->
+  <div class="phase-content">
+
+    <!-- Section Header -->
+    <div class="section-header">
+      <div class="section-num">0{{ activePhaseIndex() + 1 }}</div>
+      <div class="section-info">
+        <h2>{{ activePhase().title }}</h2>
+        <p>{{ activePhase().subtitle }}</p>
+        <span class="level-tag" [ngClass]="levelConfig[activePhase().level].cls">
+          {{ levelConfig[activePhase().level].label }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Topics Grid -->
+    <div class="topics-grid">
+      @for (topic of activePhase().topics; track topic.title; let ti = $index) {
+        @let tid = topicId(activePhaseIndex(), ti);
+        @let done = isDone(activePhaseIndex(), ti);
+        @let expanded = isExpanded(tid);
+
+        <div
+          class="topic-card"
+          [class.done]="done"
+          [class.expanded]="expanded"
+          (click)="toggleExpand(tid, $event)">
+
+          <!-- Card Header -->
+          <div class="topic-header">
+            <div class="topic-meta">
+              <div class="topic-title">{{ topic.title }}</div>
+              <div class="diff-dots">
+                @for (i of diffArray(topic.diff); track i) {
+                  <div class="diff-dot" [class.filled]="i < topic.diff"></div>
+                }
+              </div>
+            </div>
+
+            <button
+              class="check-btn"
+              [class.checked]="done"
+              (click)="toggleDone(activePhaseIndex(), ti, $event)"
+              [attr.aria-label]="done ? 'Mark incomplete' : 'Mark complete'">
+              @if (done) { ✓ }
+            </button>
+          </div>
+
+          <!-- Expand Hint -->
+          @if (!expanded) {
+            <div class="expand-hint">↓ click to expand subtopics</div>
+          }
+
+          <!-- Subtopics (expanded) -->
+          @if (expanded) {
+            <div class="topic-subtopics">
+              @for (sub of topic.subtopics; track sub.text) {
+                <div class="sub-item">
+                  <div class="sub-dot"></div>
+                  <span>
+                    {{ sub.text }}
+                    @if (sub.code) {
+                      <code class="inline-code">{{ sub.code }}</code>
+                    }
+                  </span>
+                </div>
+              }
+
+              @if (topic.snippet) {
+                <pre class="code-snippet"><code>{{ topic.snippet }}</code></pre>
+              }
+            </div>
+          }
+        </div>
+      }
+    </div>
+
+    <!-- Resources -->
+    <div class="resources-bar">
+      <h3>📚 Learning Resources</h3>
+      <div class="res-grid">
+        <a class="res-link" href="https://angular.dev" target="_blank" rel="noopener">angular.dev (Official)</a>
+        <a class="res-link" href="https://angular.dev/tutorials" target="_blank" rel="noopener">Official Tutorials</a>
+        <a class="res-link" href="https://ngrx.io/docs" target="_blank" rel="noopener">NgRx Docs</a>
+        <a class="res-link" href="https://rxjs.dev/api" target="_blank" rel="noopener">RxJS API</a>
+        <a class="res-link" href="https://blog.angular.io" target="_blank" rel="noopener">Angular Blog</a>
+        <a class="res-link" href="https://nx.dev/angular" target="_blank" rel="noopener">Nx + Angular</a>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav-btns">
+      <button
+        class="nav-btn"
+        [disabled]="activePhaseIndex() === 0"
+        (click)="goPhase(activePhaseIndex() - 1)">
+        ← Previous Phase
+      </button>
+      <button
+        class="nav-btn primary"
+        [disabled]="activePhaseIndex() === phases.length - 1"
+        (click)="goPhase(activePhaseIndex() + 1)">
+        Next Phase →
+      </button>
+    </div>
+
+  </div>
+</div>
