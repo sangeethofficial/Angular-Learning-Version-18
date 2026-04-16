@@ -8,6 +8,10 @@ const routes: Routes = [
     path: 'roadmap',
     component:RoadmapComponent
   },
+   {
+    path:'learnings',
+    component:LearnComponent
+  },
   { path: '', redirectTo: 'roadmap', pathMatch: 'full' }
 ];
 
