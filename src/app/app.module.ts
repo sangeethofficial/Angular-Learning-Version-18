@@ -6,12 +6,14 @@ import { AppComponent } from './app.component';
 import { LearnComponent } from './components/learn/learn.component';
 import { FormsModule } from '@angular/forms';
 import { RoadmapComponent } from './components/roadmap/roadmap.component';
+import { BasicComponent1Component } from './components/basic-component1/basic-component1.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LearnComponent,
-    RoadmapComponent
+    RoadmapComponent,
+    BasicComponent1Component
   ],
   imports: [
     BrowserModule,

@@ -16,6 +16,9 @@ export class LearnComponent implements OnInit{
   isUserCreated = false;
   users=['sangeeth', 'stark']
 
+
+  Tittle = 'Learn Angular';
+
   constructor(){
     setTimeout(()=>{ 
       this.allowNewUser = true;
